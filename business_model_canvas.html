@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Model Canvas | Sur-Mesure</title>
+    <meta name="description" content="Business Model Canvas d'une entreprise d'assemblage et de vente de matériel informatique sur-mesure.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #F4F1EA;
+            --text-main: #1A2530;
+            --text-light: #5A6A7D;
+            --accent: #C05A35;
+            --accent-hover: #A04A2A;
+            --card-bg: #FFFFFF;
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            background-image: radial-gradient(rgba(192, 90, 53, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            background-position: 0 0;
+            position: relative;
+        }
+
+        body::before {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, var(--bg-color) 85%);
+            z-index: -1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        h1 span { color: var(--accent); }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        .credits {
+            margin-top: 1.5rem;
+            display: inline-flex;
+            gap: 2rem;
+            background: rgba(26, 37, 48, 0.03);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            border: 1px solid rgba(26, 37, 48, 0.05);
+        }
+        
+        .credits p { margin: 0; display: flex; gap: 0.4rem; align-items: center; }
+        .credits strong { color: var(--accent); font-weight: 600; }
+
+        .canvas-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            grid-template-rows: auto auto auto;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.8rem;
+            box-shadow: 0 4px 10px rgba(26, 37, 48, 0.03);
+            border: 1px solid rgba(26, 37, 48, 0.05);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--accent); transform: scaleX(0); transform-origin: left;
+            transition: transform 0.4s ease; z-index: 2;
+        }
+
+        .card.visible { opacity: 1; transform: translateY(0); }
+        .card.visible:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(26, 37, 48, 0.08);
+            border-color: rgba(192, 90, 53, 0.15);
+        }
+        .card.visible:hover::before { transform: scaleX(1); }
+
+        .watermark {
+            position: absolute; bottom: -20px; right: -20px; font-size: 9rem;
+            color: rgba(26, 37, 48, 0.02); z-index: 0; transform: rotate(-10deg);
+            transition: var(--transition); pointer-events: none;
+        }
+        .card:hover .watermark {
+            transform: rotate(0) scale(1.05); color: rgba(192, 90, 53, 0.04);
+        }
+        .value-prop .watermark { color: rgba(255, 255, 255, 0.02); }
+        .value-prop:hover .watermark { color: rgba(255, 255, 255, 0.05); }
+
+        .card-header, .card-body { position: relative; z-index: 1; }
+
+        .card-header {
+            display: flex; align-items: center; margin-bottom: 1.2rem; gap: 1rem;
+        }
+        .icon-wrapper {
+            width: 42px; height: 42px; border-radius: 10px; background: rgba(192, 90, 53, 0.08);
+            color: var(--accent); display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; flex-shrink: 0; transition: var(--transition);
+        }
+        .card:hover .icon-wrapper {
+            background: var(--accent); color: #FFF; transform: scale(1.08);
+        }
+        .card h2 {
+            font-size: 1.1rem; font-weight: 600; color: var(--text-main); line-height: 1.2;
+        }
+
+        .card-body p {
+            margin-bottom: 1rem; line-height: 1.5; font-size: 0.9rem; color: #718096;
+        }
+        .value-prop .card-body p { color: rgba(255,255,255,0.7); }
+
+        .card-body ul {
+            list-style: none; display: flex; flex-direction: column; gap: 0.75rem;
+        }
+        .card-body li {
+            position: relative; padding-left: 1.6rem; font-size: 0.92rem; color: var(--text-light); line-height: 1.45;
+        }
+        .card-body li i.icon-bullet {
+            position: absolute; left: 0; top: 4px; color: var(--accent); font-size: 0.9rem; opacity: 0.8;
+        }
+        .card-body strong {
+            color: var(--text-main); font-weight: 600;
+        }
+        .value-prop .card-body li { color: #E2E8F0; }
+        .value-prop .card-body strong { color: #FFF; }
+        .value-prop .card-body li i.icon-bullet { color: #FFF; opacity: 0.6; }
+
+        .partners { grid-column: 1 / 3; grid-row: 1 / 3; }
+        .activities { grid-column: 3 / 5; grid-row: 1 / 2; }
+        .resources { grid-column: 3 / 5; grid-row: 2 / 3; }
+        .value-prop { 
+            grid-column: 5 / 7; grid-row: 1 / 3; background: linear-gradient(135deg, #1A2530, #2C3E50); 
+            color: white; border: none; box-shadow: 0 10px 25px rgba(26, 37, 48, 0.15);
+        }
+        .value-prop h2 { color: white; }
+        .value-prop .icon-wrapper { background: rgba(255,255,255,0.1); color: #FFF; }
+        .value-prop:hover .icon-wrapper { background: var(--accent); color: #FFF; }
+        .relationships { grid-column: 7 / 9; grid-row: 1 / 2; }
+        .channels { grid-column: 7 / 9; grid-row: 2 / 3; }
+        .segments { grid-column: 9 / 11; grid-row: 1 / 3; }
+        .costs { grid-column: 1 / 6; grid-row: 3; }
+        .revenue { grid-column: 6 / 11; grid-row: 3; }
+
+        @media (max-width: 1200px) {
+            .canvas-container { grid-template-columns: repeat(2, 1fr); }
+            .partners, .activities, .resources, .value-prop, .relationships, .channels, .segments, .costs, .revenue { grid-column: span 1; grid-row: auto; }
+            .value-prop, .costs, .revenue { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            .canvas-container { grid-template-columns: 1fr; }
+            .partners, .activities, .resources, .value-prop, .relationships, .channels, .segments, .costs, .revenue { grid-column: span 1; }
+            body { padding: 1.5rem; } h1 { font-size: 2.2rem; }
+            .credits { flex-direction: column; gap: 0.5rem; border-radius: 16px; align-items: center; }
+        }
+
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .pulse { animation: pulse-animation 0.4s ease-out; }
+        @keyframes pulse-animation { 0% { transform: scale(1); } 50% { transform: scale(0.98); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Business Model <span>Canvas</span></h1>
+        <p class="subtitle">Modèle stratégique pour la conception, l'assemblage et la vente de matériel informatique sur-mesure.</p>
+        <div class="credits">
+            <p><i class="fa-solid fa-user-graduate" style="color: var(--accent);"></i> <strong>Réalisé par :</strong> Ayoub Anam</p>
+            <p><i class="fa-solid fa-chalkboard-user" style="color: var(--accent);"></i> <strong>Professeur :</strong> Prof. Chaimae Aboukassem</p>
+        </div>
+    </header>
+
+    <main class="canvas-container" id="canvas">
+        
+        <!-- 8. Partenaires Clés -->
+        <div class="card partners">
+            <i class="fa-solid fa-handshake watermark"></i>
+            <div class="card-header">
+                <div class="icon-wrapper"><i class="fa-solid fa-handshake"></i></div>
+                <h2>8. Partenaires Clés</h2>
+            </div>
+            <div class="card-body">
+                <p>Nos alliés stratégiques pour garantir la qualité :</p>
+                <ul>
+                    <li><i class="fa-solid fa-boxes-packing icon-bullet"></i> <strong>Grossistes :</strong> Accès privilégié aux composants de dernière génération.</li>
+                    <li><i class="fa-solid fa-truck-fast icon-bullet"></i> <strong>Logistique :</strong> Partenariats de confiance pour la livraison rapide.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 7. Activités clés -->
+        <div class="card activities">
+            <i class="fa-solid fa-gears watermark"></i>
+            <div class="card-header">
+                <div class="icon-wrapper"><i class="fa-solid fa-gears"></i></div>
+                <h2>7. Activités Clés</h2>
+            </div>
+            <div class="card-body">
+                <p>Le cœur de notre métier au quotidien :</p>
+                <ul>
+                    <li><i class="fa-solid fa-magnifying-glass icon-bullet"></i> <strong>Sourcing :</strong> Recherche des meilleurs composants qualité/prix.</li>
+                    <li><i class="fa-solid fa-screwdriver-wrench icon-bullet"></i> <strong>Assemblage :</strong> Montage minutieux et intégration hybride.</li>
+                    <li><i class="fa-solid fa-shield-halved icon-bullet"></i> <strong>Validation :</strong> Tests de stress rigoureux pour garantir la stabilité.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 6. Ressources clés -->
+        <div class="card resources">
+            <i class="fa-solid fa-microchip watermark"></i>
+            <div class="card-header">
+                <div class="icon-wrapper"><i class="fa-solid fa-microchip"></i></div>
+                <h2>6. Ressources Clés</h2>
+            </div>
+            <div class="card-body">
+                <p>Les actifs indispensables à notre fonctionnement :</p>
+                <ul>
+                    <li><i class="fa-solid fa-user-gear icon-bullet"></i> <strong>Humain :</strong> Ingénieurs, conseillers et monteurs certifiés.</li>
+                    <li><i class="fa-solid fa-building icon-bullet"></i> <strong>Atelier :</strong> Infrastructure physique sécurisée et professionnelle.</li>
+                    <li><i class="fa-solid fa-layer-group icon-bullet"></i> <strong>Stocks :</strong> Inventaire stratégique de puces et de cartes mères.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 2. Proposition de valeur -->
+        <div class="card value-prop">
+            <i class="fa-solid fa-gem watermark"></i>
+            <div class="card-header">
+                <div class="icon-wrapper"><i class="fa-solid fa-gem"></i></div>
+                <h2>2. Proposition de Valeur</h2>
+            </div>
+            <div class="card-body">
+                <p>La promesse unique que nous offrons au marché :</p>
+                <ul>
+                    <li><i class="fa-solid fa-computer icon-bullet"></i> <strong>Sur-mesure :</strong> PC et serveurs 100% personnalisés (neufs ou hybrides).</li>
+                    <li><i class="fa-solid fa-bolt icon-bullet"></i> <strong>Optimisation :</strong> Des performances ajustées (Gaming, IA, Créativité).</li>
+                    <li><i class="fa-solid fa-scale-balanced icon-bullet"></i> <strong>Flexibilité :</strong> Tarification transparente et adaptée au budget.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 4. Relation client -->
+        <div class="card relationships">
+            <i class="fa-solid fa-headset watermark"></i>
+            <div class="card-header">
+                <div class="icon-wrapper"><i class="fa-solid fa-headset"></i></div>
+                <h2>4. Relation Client</h2>
+            </div>
+            <div class="card-body">
+                <p>Comment nous interagissons et fidélisons :</p>
+                <ul>
+                    <li><i class="fa-solid fa-user-tie icon-bullet"></i> <strong>Conseil :</strong> Accompagnement technique pointu en avant-vente.</li>
+                    <li><i class="fa-solid fa-toolbox icon-bullet"></i> <strong>Proximité :</strong> Intervention rapide, réparation locale et garanties.</li>
+                    <li><i class="fa-solid fa-comments icon-bullet"></i> <strong>Communauté :</strong> Assistance continue via nos plateformes sociales.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 3. Canaux -->
+        <div class="card channels">
+            <i class="fa-solid fa-store watermark"></i>
+            <div class="card-header">
+                <div class="icon-wrapper"><i class="fa-solid fa-store"></i></div>
+                <h2>3. Canaux</h2>
+            </div>
+            <div class="card-body">
+                <p>Nos points de contact avec la clientèle :</p>
+                <ul>
+                    <li><i class="fa-solid fa-globe icon-bullet"></i> <strong>E-commerce :</strong> Plateforme web avec configurateur 3D immersif.</li>
+                    <li><i class="fa-solid fa-shop icon-bullet"></i> <strong>Boutique :</strong> Showroom physique pour tester et échanger.</li>
+                    <li><i class="fa-brands fa-twitch icon-bullet"></i> <strong>Réseaux :</strong> Présence active (Twitch, YouTube) avec montages Live.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 1. Segments clients -->
+        <div class="card segments">
+            <i class="fa-solid fa-users watermark"></i>
+            <div class="card-header">
+                <div class="icon-wrapper"><i class="fa-solid fa-users"></i></div>
+                <h2>1. Segments Clients</h2>
+            </div>
+            <div class="card-body">
+                <p>Les cœurs de cible que nous servons :</p>
+                <ul>
+                    <li><i class="fa-solid fa-gamepad icon-bullet"></i> <strong>Gamers :</strong> Particuliers exigeants pour le gaming 4K.</li>
+                    <li><i class="fa-solid fa-briefcase icon-bullet"></i> <strong>Entreprises :</strong> TPE/PME et studios pour des stations de travail.</li>
+                    <li><i class="fa-solid fa-building-columns icon-bullet"></i> <strong>Secteur Public :</strong> Écoles et mairies nécessitant des parcs durables.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 9. Structure de coûts -->
+        <div class="card costs">
+            <i class="fa-solid fa-wallet watermark"></i>
+            <div class="card-header">
+                <div class="icon-wrapper"><i class="fa-solid fa-wallet"></i></div>
+                <h2>9. Structure de Coûts</h2>
+            </div>
+            <div class="card-body">
+                <p>Nos principales sources de dépenses :</p>
+                <ul>
+                    <li><i class="fa-solid fa-cart-shopping icon-bullet"></i> <strong>Achats (COGS) :</strong> Acquisition des composants et pièces de rechange.</li>
+                    <li><i class="fa-solid fa-users-gear icon-bullet"></i> <strong>Salaires :</strong> Rémunération des monteurs, techniciens et conseillers.</li>
+                    <li><i class="fa-solid fa-file-invoice-dollar icon-bullet"></i> <strong>Frais fixes :</strong> Loyer du local, hébergement serveurs et licences.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 5. Flux de revenus -->
+        <div class="card revenue">
+            <i class="fa-solid fa-coins watermark"></i>
+            <div class="card-header">
+                <div class="icon-wrapper"><i class="fa-solid fa-coins"></i></div>
+                <h2>5. Flux de Revenus</h2>
+            </div>
+            <div class="card-body">
+                <p>Comment nous générons de la valeur financière :</p>
+                <ul>
+                    <li><i class="fa-solid fa-tag icon-bullet"></i> <strong>Matériel :</strong> Marge sur la revente des composants et configurations.</li>
+                    <li><i class="fa-solid fa-wrench icon-bullet"></i> <strong>Services :</strong> Forfaits de montage physique, câblage et tests.</li>
+                    <li><i class="fa-solid fa-file-contract icon-bullet"></i> <strong>Contrats B2B :</strong> Maintenance annuelle et mise à jour de parcs.</li>
+                </ul>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('visible');
+                }, 80 * index + 100);
+            });
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.classList.remove('pulse');
+                    void this.offsetWidth;
+                    this.classList.add('pulse');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
